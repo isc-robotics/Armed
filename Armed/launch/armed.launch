@@ -1,0 +1,49 @@
+<?xml version="1.0"?> 
+<launch>
+
+    <arg name="serial_port_bicep" default="/dev/ttyUSB0" />
+    <arg name="serial_port_forearm" default="/dev/ttyUSB1" />
+    <!--<arg name="serial_port_arduino" default="/dev/ttyACM0" />-->
+    <arg name="serial_baud_arduino" default="57600"/>
+    <arg name="frame_id_bicep" default="bicep" />
+    <arg name="frame_id_forearm" default="forearm" />
+    
+    <arg name="operation_mode" default="IMU"/>
+    <arg name="oscillator" default="INTERNAL" />
+    <arg name="reset_orientation" default="true" />
+    <arg name="frequency" default="50" /> 
+    <arg name="use_magnetometer" default="false" />
+    <arg name="use_temperature" default="false" /> 
+
+
+    <node pkg="ros_imu_bno055" type="imu_ros.py" name="ros_imu_bno055_bicep_node" output="screen">
+        <param name="serial_port" value="$(arg serial_port_bicep)" />
+        <param name="frame_id" value="$(arg frame_id_bicep)" />
+        <param name="operation_mode" value="$(arg operation_mode)" />
+        <param name="oscillator" value="$(arg oscillator)" />
+        <param name="reset_orientation" value = "$(arg reset_orientation)" />
+        <param name="frequency" value="$(arg frequency)" />
+        <param name="use_magnetometer" value="$(arg use_magnetometer)" />    
+        <param name="use_temperature" value="$(arg use_temperature)" />    
+    </node>
+    <node pkg="ros_imu_bno055" type="imu_ros.py" name="ros_imu_bno055_forearm_node" output="screen">
+        <param name="serial_port" value="$(arg serial_port_forearm)" />
+        <param name="frame_id" value="$(arg frame_id_forearm)" />
+        <param name="operation_mode" value="$(arg operation_mode)" />
+        <param name="oscillator" value="$(arg oscillator)" />
+        <param name="reset_orientation" value = "$(arg reset_orientation)" />
+        <param name="frequency" value="$(arg frequency)" />
+        <param name="use_magnetometer" value="$(arg use_magnetometer)" />    
+        <param name="use_temperature" value="$(arg use_temperature)" />    
+    </node>
+    
+    <node pkg="ang_vel_convert" type="ang_vel_convert" name="ang_vel_convert_node" output="screen"/>
+    
+    <node pkg="rosserial_python" type="serial_node.py" name="rosserial" output="screen">
+  	<param name="port" value="/dev/ttyACM0" />
+  	<param name="baud" value="57600" />
+    </node>
+    
+    
+
+</launch>
