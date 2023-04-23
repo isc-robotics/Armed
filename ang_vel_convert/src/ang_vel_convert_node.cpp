@@ -30,15 +30,15 @@ void imu_cb(const sensor_msgs::Imu::ConstPtr& msg)
 
 
 void convert_cb(const ros::TimerEvent&){
+    double rad_delta_s;
     if(shoulder_data.size() > 0){
         //Assuming theres data stored in our buffer we need to average that and create a position estimate
-        double rad_delta_s;
-        ROS_INFO("DATA BEGIN: ");
+        //ROS_INFO("DATA BEGIN: ");
         for(int i = 0; i < shoulder_data.size(); i++){
-            ROS_INFO("%f", shoulder_data.at(i));
+            //ROS_INFO("%f", shoulder_data.at(i));
             rad_delta_s += shoulder_data.at(i);
         }
-        ROS_INFO("DATA END");
+        //ROS_INFO("DATA END");
         //Avg data
         rad_delta_s = rad_delta_s/shoulder_data.size();
         //Turn data from rad/sec to rad
@@ -63,17 +63,18 @@ void convert_cb(const ros::TimerEvent&){
     if(elbow_data.size() > 0){
         //Assuming theres data stored in our buffer we need to average that and create a position estimate
         double rad_delta;
-        ROS_INFO("DATA BEGIN: ");
+        //ROS_INFO("DATA BEGIN: ");
         for(int i = 0; i < elbow_data.size(); i++){
-            ROS_INFO("%f", elbow_data.at(i));
+            //ROS_INFO("%f", elbow_data.at(i));
             rad_delta += elbow_data.at(i);
         }
-        ROS_INFO("DATA END");
+        //ROS_INFO("DATA END");
         //Avg data
         rad_delta = rad_delta/elbow_data.size();
         //Turn data from rad/sec to rad
         rad_delta = rad_delta/refresh_rate;
         //Convert from rad to angle
+        rad_delta = rad_delta - std::abs(rad_delta_s);
         double degree_delta = rad_delta * (180/3.1415926);
         degree_delta = degree_delta/100;
 
