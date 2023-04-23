@@ -15,10 +15,14 @@ ros::Publisher servo_elbow_pub;
 void imu_cb(const sensor_msgs::Imu::ConstPtr& msg)
 {
     if(msg->header.frame_id == "bicep"){
-        shoulder_data.push_back(msg->angular_velocity.z);
+    	if(msg->angular_velocity.z < -0.1 || msg->angular_velocity.z > 0.1){
+        	shoulder_data.push_back(msg->angular_velocity.z);
+        }
     }
     else if(msg->header.frame_id == "forearm"){
-        elbow_data.push_back(msg->angular_velocity.z);
+    	if(msg->angular_velocity.z < -0.1 || msg->angular_velocity.z > 0.1){
+        	elbow_data.push_back(msg->angular_velocity.z);
+        }
     }
     //data.push_back(msg->angular_velocity.z);
 }
