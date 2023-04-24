@@ -31,7 +31,7 @@ Our hardware setup is very rudimentary, utilizing a lot of breadboards and ardui
 
 ### IMU Setup
 Below we have attached an image of how we have the BNO055 IMU setup with the UART to USB adapter.  We have the BNO055 plugged into a small breadboard, then we taped the UART to USB adapter to the breadboard, then utilized simple arduino jumpers to connect the adapter to the sensor.  From the UART adapter we used a USB extender to connect to the computer.
-[IMG_0273](https://user-images.githubusercontent.com/24546442/233996857-14172188-3f9b-4651-8894-885ae8fe90af.jpeg)
+[IMU to UART Setup](https://user-images.githubusercontent.com/24546442/233996857-14172188-3f9b-4651-8894-885ae8fe90af.jpeg)
 
 NOTE: When connecting the IMUs/Adapters, plug in the sensor you want to use as the bicep sensor FIRST, then plug in the forearm sensor.  This is based off of when the USB port gets connected after boot of the computer, NOT when the program is started.
 
