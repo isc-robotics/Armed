@@ -27,7 +27,13 @@ We also found (which was stated in the [Arduino Driver Docs](http://wiki.ros.org
 This file is a little rough, but what it is doing is taking in the data from the `/imu/data` topic, seperating the data based on sending node to differentiate betweeen forearm and bicep link sensors.  We found that there is a fair amount of noise coming from the sensors, to help mitigate that we store a set of data point over time, and calculate the average from that set of data.  That average is then converted to degrees, dampened to smooth movement, and then sent to the Arduino Node.
 
 ## Hardware Setup
+Our hardware setup is very rudimentary, utilizing a lot of breadboards and arduino jumpers.
+
+### IMU Setup
 Below we have attached an image of how we have the BNO055 IMU setup with the UART to USB adapter.  We have the BNO055 plugged into a small breadboard, then we taped the UART to USB adapter to the breadboard, then utilized simple arduino jumpers to connect the adapter to the sensor.  From the UART adapter we used a USB extender to connect to the computer.
 [IMG_0273](https://user-images.githubusercontent.com/24546442/233996857-14172188-3f9b-4651-8894-885ae8fe90af.jpeg)
 
 NOTE: When connecting the IMUs/Adapters, plug in the sensor you want to use as the bicep sensor FIRST, then plug in the forearm sensor.  This is based off of when the USB port gets connected after boot of the computer, NOT when the program is started.
+
+### Arduino Servor Setup
+As stated before, if you intend to run more than one servo it is highly recommended to run a seperate power supply, in our case we are using a small desktop power supply, but as long as you supply 5V it will work fine.  In our case we plugged the desktop power supply into a breadboard, plugging the power and ground of the servos into the same rail, then plugged the ground rail into the Arduino ground pin.  The control wires of the servo are still directly connected to the Arduino output pins (in our case pins 9 and 10).
